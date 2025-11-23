@@ -43,10 +43,21 @@ const EventSchema = new Schema<IEvent>(
 EventSchema.pre('save', async function () {
     // Generate slug if title is modified
     if (this.isModified('title')) {
-        this.slug = this.title
+        let slug = this.title
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/(^-|-$)+/g, '');
+
+        // Check for uniqueness
+        const Event = this.constructor as any;
+        let uniqueSlug = slug;
+        let counter = 1;
+
+        while (await Event.findOne({ slug: uniqueSlug, _id: { $ne: this._id } })) {
+            uniqueSlug = `${slug}-${counter}`;
+            counter++;
+        }
+        this.slug = uniqueSlug;
     }
 
     // Normalize date to ISO string

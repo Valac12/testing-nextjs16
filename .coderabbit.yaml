@@ -1,0 +1,8 @@
+reviews:
+  auto_review:
+    enabled: true
+    base_branches:
+      - ".*" # Enable for all base branches
+    drafts: false
+chat:
+  auto_reply: true
