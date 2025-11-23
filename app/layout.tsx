@@ -3,6 +3,7 @@ import { Schibsted_Grotesk, Martian_Mono } from "next/font/google";
 import "./globals.css";
 import LightRays from "@/components/ui/LightRays";
 import Navbar from "@/components/ui/Navbar";
+import { PHProvider } from "./providers";
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
@@ -16,7 +17,7 @@ const martianMono = Martian_Mono({
 
 export const metadata: Metadata = {
   title: "DevEvent",
-  description: "lorem ipsum",
+  description: "The Hub for Every Dev Event You Mustn't Miss",
 };
 
 export default function RootLayout({
@@ -29,11 +30,11 @@ export default function RootLayout({
       <body
         className={`${schibstedGrotesk.variable} ${martianMono.variable} min-h-screen antialiased`}
       >
+        <PHProvider>
+          <Navbar />
 
-      <Navbar/>
-
-      <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
-          <LightRays
+          <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
+            <LightRays
               raysOrigin="top-center-offset"
               raysColor="#5dfeca"
               raysSpeed={0.5}
@@ -43,13 +44,13 @@ export default function RootLayout({
               mouseInfluence={0.2}
               noiseAmount={0.1}
               distortion={0.05}
-          />
-      </div>
+            />
+          </div>
 
-      <main>
-      {children}
-      </main>
-
+          <main>
+            {children}
+          </main>
+        </PHProvider>
       </body>
     </html>
   );
